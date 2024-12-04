@@ -53,12 +53,72 @@ namespace BankApp
         {
             //otwórz formularz nowego przelewu
             NewTransfer newTransfer = new NewTransfer();
-            
+
             newTransfer.token = token;
             newTransfer.source = AccountNumberTextBox.Text;
 
             newTransfer.ShowDialog();
             //TODO: poka¿ zaktualizowany stan konta po wykonaniu przelewu
         }
+
+        private async void buttontransfery_Click(object sender, EventArgs e)
+        {
+            listViewTransfers.Items.Clear();
+
+            try
+            {
+                // Wywo³ujemy API, aby pobraæ przelewy
+                var transfers = await GetTransfersAsync(token);
+
+                // Sprawdzamy, czy transfers nie jest null
+                if (transfers != null)
+                {
+                    // Dodajemy ka¿dy transfer do listy
+                    foreach (var transfer in transfers)
+                    {
+                        var item = new ListViewItem(transfer.created_at.ToString());
+                        item.SubItems.Add(transfer.source_account.ToString());
+                        item.SubItems.Add(transfer.target_account.ToString());
+                        item.SubItems.Add(transfer.amount.ToString());
+                        listViewTransfers.Items.Add(item);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Nie uda³o siê pobraæ przelewów.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"B³¹d przy pobieraniu przelewów: {ex.Message}");
+            }
+        }
+
+
+        private async Task<dynamic[]> GetTransfersAsync(string token)
+        {
+            using (var client = new HttpClient())
+            {
+                string url = "http://localhost/bankAPI/transfers";
+
+                var requestData = new
+                {
+                    token = token
+                };
+
+                var response = await client.PostAsync(
+                    url,
+                    new StringContent(JsonConvert.SerializeObject(requestData), System.Text.Encoding.UTF8, "application/json")
+                );
+
+                response.EnsureSuccessStatusCode();
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                MessageBox.Show(responseBody);  // Debugowanie odpowiedzi serwera
+
+                return JsonConvert.DeserializeObject<dynamic[]>(responseBody);
+            }
+        }
     }
 }
+

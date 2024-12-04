@@ -37,6 +37,12 @@
             label2 = new Label();
             tokenTextBox = new TextBox();
             newTransferButton = new Button();
+            buttontransfery = new Button();
+            listViewTransfers = new ListView();
+            KolumnaData = new ColumnHeader();
+            KolumnaZrodlo = new ColumnHeader();
+            KolumnaCel = new ColumnHeader();
+            KolumnaKwota = new ColumnHeader();
             AccountDetailsGroupBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -109,10 +115,10 @@
             // tokenTextBox
             // 
             tokenTextBox.Dock = DockStyle.Bottom;
-            tokenTextBox.Location = new Point(0, 226);
+            tokenTextBox.Location = new Point(0, 350);
             tokenTextBox.Name = "tokenTextBox";
             tokenTextBox.ReadOnly = true;
-            tokenTextBox.Size = new Size(463, 23);
+            tokenTextBox.Size = new Size(617, 23);
             tokenTextBox.TabIndex = 4;
             // 
             // newTransferButton
@@ -125,11 +131,54 @@
             newTransferButton.UseVisualStyleBackColor = true;
             newTransferButton.Click += newTransferButton_Click;
             // 
+            // buttontransfery
+            // 
+            buttontransfery.Location = new Point(38, 182);
+            buttontransfery.Name = "buttontransfery";
+            buttontransfery.Size = new Size(112, 23);
+            buttontransfery.TabIndex = 6;
+            buttontransfery.Text = "pokaz przelewy";
+            buttontransfery.UseVisualStyleBackColor = true;
+            buttontransfery.Click += buttontransfery_Click;
+            // 
+            // listViewTransfers
+            // 
+            listViewTransfers.Columns.AddRange(new ColumnHeader[] { KolumnaData, KolumnaZrodlo, KolumnaCel, KolumnaKwota });
+            listViewTransfers.FullRowSelect = true;
+            listViewTransfers.Location = new Point(29, 225);
+            listViewTransfers.Name = "listViewTransfers";
+            listViewTransfers.Size = new Size(206, 90);
+            listViewTransfers.TabIndex = 7;
+            listViewTransfers.UseCompatibleStateImageBehavior = false;
+            listViewTransfers.View = View.Details;
+            // 
+            // KolumnaData
+            // 
+            KolumnaData.Text = "Data";
+            KolumnaData.Width = 50;
+            // 
+            // KolumnaZrodlo
+            // 
+            KolumnaZrodlo.Text = "Zrodlo";
+            KolumnaZrodlo.Width = 50;
+            // 
+            // KolumnaCel
+            // 
+            KolumnaCel.Text = "Cel";
+            KolumnaCel.Width = 50;
+            // 
+            // KolumnaKwota
+            // 
+            KolumnaKwota.Text = "Kwota";
+            KolumnaKwota.Width = 50;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(463, 249);
+            ClientSize = new Size(617, 373);
+            Controls.Add(listViewTransfers);
+            Controls.Add(buttontransfery);
             Controls.Add(newTransferButton);
             Controls.Add(tokenTextBox);
             Controls.Add(AccountDetailsGroupBox);
@@ -153,5 +202,11 @@
         private Label label2;
         private TextBox tokenTextBox;
         private Button newTransferButton;
+        private Button buttontransfery;
+        private ListView listViewTransfers;
+        private ColumnHeader KolumnaData;
+        private ColumnHeader KolumnaZrodlo;
+        private ColumnHeader KolumnaCel;
+        private ColumnHeader KolumnaKwota;
     }
 }
